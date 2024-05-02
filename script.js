@@ -1,58 +1,90 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const addButton = document.getElementById("addButton");
-    const employeeTableBody = document.getElementById("employeeTableBody");
+// Define an array to store employee data
+let employees = [];
 
-    // Sample data for testing
-    let employees = [
-        { id: 1, firstName: "John", lastName: "Doe", email: "john@example.com", salary: 50000, date: "2024-05-01" },
-        { id: 2, firstName: "Jane", lastName: "Smith", email: "jane@example.com", salary: 60000, date: "2024-05-01" }
-    ];
+// Function to render the employee list
+function renderEmployeeList() {
+  const tableBody = document.querySelector('tbody');
+  tableBody.innerHTML = '';
 
-    // Function to render table rows
-    function renderTable() {
-        employeeTableBody.innerHTML = "";
-        employees.forEach((employee, index) => {
-            const row = `
-                <tr>
-                    <td>${index + 1}</td>
-                    <td>${employee.firstName}</td>
-                    <td>${employee.lastName}</td>
-                    <td>${employee.email}</td>
-                    <td>${employee.salary}</td>
-                    <td>${employee.date}</td>
-                    <td>
-                        <button onclick="editEmployee(${employee.id})">Edit</button>
-                        <button onclick="deleteEmployee(${employee.id})">Delete</button>
-                    </td>
-                </tr>
-            `;
-            employeeTableBody.innerHTML += row;
-        });
-    }
+  employees.forEach((employee, index) => {
+    const row = document.createElement('tr');
 
-    // Function to add employee
-    function addEmployee() {
-        // You can implement code to get input values and add a new employee here
-        // For simplicity, I'm adding a sample employee
-        const newEmployee = { id: employees.length + 1, firstName: "New", lastName: "Employee", email: "new@example.com", salary: 40000, date: "2024-05-02" };
-        employees.push(newEmployee);
-        renderTable();
-    }
+    const nameCell = document.createElement('td');
+    nameCell.textContent = employee.name;
+    row.appendChild(nameCell);
 
-    // Function to edit employee
-    function editEmployee(id) {
-        console.log("Editing employee with ID:", id);
-    }
+    const emailCell = document.createElement('td');
+    emailCell.textContent = employee.email;
+    row.appendChild(emailCell);
 
-    // Function to delete employee
-    function deleteEmployee(id) {
-        employees = employees.filter(employee => employee.id !== id);
-        renderTable();
-    }
+    const phoneCell = document.createElement('td');
+    phoneCell.textContent = employee.phone;
+    row.appendChild(phoneCell);
 
-    // Initial rendering of the table
-    renderTable();
+    const hireDateCell = document.createElement('td');
+    hireDateCell.textContent = employee.hireDate;
+    row.appendChild(hireDateCell);
 
-    // Event listener for add button
-    addButton.addEventListener("click", addEmployee);
-});
+    const actionsCell = document.createElement('td');
+    const editButton = document.createElement('button');
+    editButton.textContent = 'Edit';
+    editButton.classList.add('bg-yellow-500', 'hover:bg-yellow-700', 'text-white', 'font-bold', 'py-1', 'px-2', 'rounded', 'mr-2');
+    editButton.addEventListener('click', () => editEmployee(index));
+    actionsCell.appendChild(editButton);
+
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+    deleteButton.classList.add('bg-red-500', 'hover:bg-red-700', 'text-white', 'font-bold', 'py-1', 'px-2', 'rounded');
+    deleteButton.addEventListener('click', () => deleteEmployee(index));
+    actionsCell.appendChild(deleteButton);
+
+    row.appendChild(actionsCell);
+    tableBody.appendChild(row);
+  });
+}
+
+// Function to add a new employee
+function addEmployee(event) {
+  event.preventDefault();
+
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const phone = document.getElementById('phone').value;
+  const hireDate = document.getElementById('hireDate').value;
+
+  const newEmployee = { name, email, phone, hireDate };
+  employees.push(newEmployee);
+  renderEmployeeList();
+
+  // Clear the form inputs
+  document.getElementById('employeeForm').reset();
+}
+
+// Function to edit an existing employee
+function editEmployee(index) {
+  const employee = employees[index];
+
+  document.getElementById('name').value = employee.name;
+  document.getElementById('email').value = employee.email;
+  document.getElementById('phone').value = employee.phone;
+  document.getElementById('hireDate').value = employee.hireDate;
+
+  // Remove the employee from the array
+  employees.splice(index, 1);
+
+  // Update the employee list
+  renderEmployeeList();
+}
+
+// Function to delete an employee
+function deleteEmployee(index) {
+  employees.splice(index, 1);
+  renderEmployeeList();
+}
+
+// Add event listener to the form
+const employeeForm = document.getElementById('employeeForm');
+employeeForm.addEventListener('submit', addEmployee);
+
+// Render the initial employee list
+renderEmployeeList();
