@@ -2,11 +2,12 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 1px;
     padding: 10px;
     width: 800px;
     max-width: 100vw;
     margin: auto;
+    margin-top: 10px;
 }
 
 header {
@@ -18,7 +19,7 @@ header {
 h1 {
     font-family: 'Rubik';
     font-weight: 500;
-    font-size: 50px;
+    font-size: 60px;
 }
 
 .button {
@@ -28,15 +29,51 @@ h1 {
     padding: 10px 32px;
     font-size: 20px;
     color: white;
-    background-color: #308aeb;
+    background-color: #084485;
     border: none;
     cursor: pointer;
     text-decoration: none;
     transition: background-color 0.3s ease;
     text-align: left;
     margin: 4px 5px;
+    box-shadow: 0 9px #999;
+    outline: none;
+    border-radius: 15px;
 }
 
 .button:hover {
     background-color: #024792;
+}
+
+.button:active {
+    background-color: #0c1cac;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+.centertable {
+    width: 90%;
+    margin: auto;
+    overflow: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+th {
+    background-color: #dadff7;
+    color: rgb(0, 0, 0);
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
 }
