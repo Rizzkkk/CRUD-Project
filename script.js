@@ -50,7 +50,7 @@ function addEmployee(event) {
   const name = document.getElementById('name').value;
   const email = document.getElementById('email').value;
   const phone = document.getElementById('phone').value;
-  const hireDate = document.getElementById('hireDate').value;
+  const hireDate = document.getElementById('address').value;
 
   const newEmployee = { name, email, phone, hireDate };
   employees.push(newEmployee);
